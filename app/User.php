@@ -27,6 +27,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function index()
+    {
+        $data = [];
+        if (\Auth::check()) {
+            // 認証済みユーザ（閲覧者）を取得
+            $user = \Auth::user();
+            // ユーザとフォロー中ユーザの投稿の一覧を作成日時の降順で取得
+            $microposts = $user->feed_microposts()->orderBy('created_at', 'desc')->paginate(10);
+
+            $data = [
+                'user' => $user,
+                'microposts' => $microposts,
+            ];
+        }
+
+        // Welcomeビューでそれらを表示
+        return view('welcome', $data);
+    }
 
     /**
      * The attributes that should be cast to native types.
@@ -96,5 +115,18 @@ class User extends Authenticatable
     public function followers()
     {
         return $this->belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id')->withTimestamps();
+    }
+    
+    /**
+     * このユーザとフォロー中ユーザの投稿に絞り込む。
+     */
+    public function feed_microposts()
+    {
+        // このユーザがフォロー中のユーザのidを取得して配列にする
+        $userIds = $this->followings()->pluck('users.id')->toArray();
+        // このユーザのidもその配列に追加
+        $userIds[] = $this->id;
+        // それらのユーザが所有する投稿に絞り込む
+        return Micropost::whereIn('user_id', $userIds);
     }
 }
