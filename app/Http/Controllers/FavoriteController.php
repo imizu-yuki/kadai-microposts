@@ -9,7 +9,7 @@ class FavoriteController extends Controller
     public function show($id)
     {
         // idの値でユーザを検索して取得
-        $user = favoritesMicroposts()->findOrFail($id);
+        $user = User::findOrFail($id);
 
         // 関係するモデルの件数をロード
         $user->loadRelationshipCounts();
