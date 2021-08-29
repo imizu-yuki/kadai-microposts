@@ -5,25 +5,25 @@ namespace App\Http\Controllers;
 class UserFollowController extends Controller
 {
     /**
-     * ユーザをフォローするアクション。
-     *
-     * @param  $id  相手ユーザのid
-     * @return \Illuminate\Http\Response
-     */
+    * 投稿をお気に入り登録するアクション。
+    *
+    * @param $id 相手ユーザのid
+    * @return \Illuminate\Http\Response
+    */
     public function store($id)
     {
-        // 認証済みユーザ（閲覧者）が、 idのユーザをフォローする
-        \Auth::user()->follow($id);
+        // 認証済みユーザ（閲覧者）が、 投稿をお気に入り登録する
+        \Auth::user()->favorite($microsoftId);
         // 前のURLへリダイレクトさせる
         return back();
     }
 
     /**
-     * ユーザをアンフォローするアクション。
-     *
-     * @param  $id  相手ユーザのid
-     * @return \Illuminate\Http\Response
-     */
+    * 投稿のお気に入り登録を外すアクション。
+    *
+    * @param $id 相手ユーザのid
+    * @return \Illuminate\Http\Response
+    */
     public function destroy($id)
     {
         // 認証済みユーザ（閲覧者）が、 idのユーザをアンフォローする
