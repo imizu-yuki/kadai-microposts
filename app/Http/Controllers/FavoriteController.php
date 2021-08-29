@@ -6,6 +6,24 @@ use Illuminate\Http\Request;
 
 class UserFollowController extends Controller
 {
+    public function show($id)
+    {
+        // idの値でユーザを検索して取得
+        $user = favoritesMicroposts()->findOrFail($id);
+
+        // 関係するモデルの件数をロード
+        $user->loadRelationshipCounts();
+
+        // ユーザのお気に入り一覧を取得
+       $favorites = $user->favoritesMicroposts()->paginate(10);
+       
+        // 投稿一覧ビューでそれらを表示
+        return view('users.show', [
+            'user' => $user,
+            'favorites' => $favorites,
+        ]);
+    }
+    
     /**
     * 投稿をお気に入り登録するアクション。
     *

@@ -22,13 +22,14 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 // お気に入り機能用ルート追加
 Route::group(['middleware' => ['auth']], function () {
-Route::group(['prefix' => 'users/{id}'], function () {
-Route::post('favorite', 'UserFavoriteController@store')->name('user.favorite');
-Route::delete('unfavorite', 'UserFavoriteController@destroy')->name('user.unfavorite');
- 
+    Route::group(['prefix' => 'users/{id}'], function () {
+        Route::post('favorite', 'UserFavoriteController@store')->name('user.favorite');
+        Route::delete('unfavorite', 'UserFavoriteController@destroy')->name('user.unfavorite');
+    // このあたりへ「お気に入り一覧ページへ移動する」のルート定義をしましょう。
+    Route::get('favorites', 'FavoriteController@show')->name('navbar.favorites');
 });
- 
-Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
- 
-Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]);
+
+    Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+     
+    Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]);
 });
