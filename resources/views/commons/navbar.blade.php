@@ -19,7 +19,7 @@
                             {{-- ユーザ詳細ページへのリンク --}}
                             <li class="dropdown-item"><a href="#">My profile</a></li>
                             {{-- お気に入りへのリンク --}}
-                            <a href="{{ route('user.favorite', ['user_id'=>'id']) }}">Favorite</a>
+                            <li class="dropdown-item">{!! link_to_route('user.favorite', 'Favorite') !!}</li>
                             <li class="dropdown-divider"></li>
                             {{-- ログアウトへのリンク --}}
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
