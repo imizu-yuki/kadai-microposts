@@ -19,7 +19,6 @@
                             {{-- ユーザ詳細ページへのリンク --}}
                             <li class="dropdown-item"><a href="#">My profile</a></li>
                             {{-- お気に入りへのリンク --}}
-                            // <li class="dropdown-item">{!! link_to_route('user.favorite', 'Favorite') !!}</li>
                             <a href="{{ route('user.favorite', ['user_id'=>'id']) }}">Favorite</a>
                             <li class="dropdown-divider"></li>
                             {{-- ログアウトへのリンク --}}
